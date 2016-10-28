@@ -8,31 +8,28 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
 	// write your code here
-        ServerSocket ss = new ServerSocket(8081);
+        ServerSocket ss = new ServerSocket(Integer.valueOf(args[0]));
         while(true){
-            try {
-                Socket s = ss.accept();
 
-                System.out.println("Connected to client");
+            Socket s = ss.accept();
 
-                BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                PrintWriter out =
-                        new PrintWriter(s.getOutputStream(), true);
+            System.out.println("Connected to client");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            PrintWriter out =
+                    new PrintWriter(s.getOutputStream(), true);
 
 
 
-                while (s.isConnected()) {
-                    String input = br.readLine();
-                    System.out.println("Read: " + input);
-                    out.println(input);
+            while (s.isConnected()) {
+                String input = br.readLine();
+                System.out.println("Read: " + input);
+                out.println(input);
 
-                }
-
-                System.out.println("Disconnected from client");
             }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+
+            System.out.println("Disconnected from client");
+
         }
 
     }
